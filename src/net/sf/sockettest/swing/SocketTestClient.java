@@ -433,13 +433,24 @@ public class SocketTestClient extends JPanel implements NetService{
     public void sendMessage(String s) {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try {
-            if (out == null) {
+        	
+            /*if (out == null) {
                 out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())), true);
-            }
-            append("S: " + s);
-            out.print(s + NEW_LINE);
-            out.flush();
+            }*/
+            
+        	byte[] text = new byte[] {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+            		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
+            		0x00, 0x00, 0x00, 0x00, 0x00, 0x53, 0x41, 0x58, 
+            		0x53, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x64, 
+            		0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x03, 
+            		0x00, 0x00, 0x00, 0x3c};
+
+        	socket.getOutputStream().write(text);
+            
+            append("S: " + text);
+            //out.print(s + NEW_LINE);
+            //out.flush();
             sendField.setText("");
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         } catch (Exception e) {
